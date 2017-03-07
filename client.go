@@ -1,7 +1,9 @@
 package piconetboot
 
+import "net/url"
+
 type BootClientStore interface {
-	// TODO
+	Find(filter url.Values) (BootClient, err)
 }
 
 type BootClient interface {
