@@ -59,7 +59,7 @@ boot
 	}).Methods("POST")
 
 	srv := &http.Server{
-		Handler: r,
+		Handler: requestLogger{r},
 		Addr:    addr,
 	}
 
@@ -96,4 +96,13 @@ func ipxeScriptPreamble() string {
 	localAddress := addr
 
 	return fmt.Sprintf("#!ipxe\nset bootserver %s\n", localAddress)
+}
+
+type requestLogger struct {
+	handler http.Handler
+}
+
+func (h requestLogger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.WithField("url", r.URL).WithField("remote-address", r.RemoteAddr).Info(r.Method)
+	h.handler.ServeHTTP(w, r)
 }
