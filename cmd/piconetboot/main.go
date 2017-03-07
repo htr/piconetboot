@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
 )
 
