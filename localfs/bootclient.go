@@ -26,10 +26,10 @@ func (c bootClient) BootScript() string {
 }
 
 func (c bootClient) match(filter url.Values) bool {
-	mac := vals.Get("net0mac") //XXX ok for now (and probably forever.. undionly)
-	asset := vals.Get("asset")
-	serial := vals.Get("serial")
-	uuid := vals.Get("uuid")
+	mac := filter.Get("net0mac") //XXX ok for now (and probably forever.. undionly)
+	asset := filter.Get("asset")
+	serial := filter.Get("serial")
+	uuid := filter.Get("uuid")
 
 	return false
 }
