@@ -8,6 +8,7 @@ import (
 
 type localFsStore struct {
 	path string
+	clientsCache []bootClient{}
 }
 
 var _ piconetboot.BootClientStore = (*localFsStore)(nil)
