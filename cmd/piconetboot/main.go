@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 var (
@@ -18,6 +21,15 @@ func main() {
 	flag.Parse()
 
 	// handle the debug thingy
+
+	r := mux.NewRouter()
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
+	}).Methods("GET")
+
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
+	}).Methods("POST")
 
 	fmt.Println("vim-go")
 }
