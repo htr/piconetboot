@@ -23,6 +23,21 @@ func main() {
 
 	// handle the debug thingy
 
+	const defaultScript = `#!ipxe
+dhcp
+params
+set idx:int32 0
+:loop isset ${net${idx}/mac} || goto loop_done
+echo net${idx} is a ${net${idx}/chip} with MAC ${net${idx}/mac}
+param net${idx}mac ${net${idx}/mac}
+inc idx && goto loop
+:loop_done
+param uuid ${uuid}
+param serial ${serial}
+param asset ${asset}
+chain http://10.0.15.1:8085/boot##params
+`
+
 	r := mux.NewRouter()
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
