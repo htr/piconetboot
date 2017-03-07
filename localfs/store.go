@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"sync"
 
+	yaml "gopkg.in/yaml.v2"
+
 	log "github.com/Sirupsen/logrus"
 	"github.com/htr/piconetboot"
 )
