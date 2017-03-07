@@ -68,7 +68,11 @@ func (s *localFsStore) updateCache() {
 		fileContents, err := ioutil.ReadFile(path)
 		if err != nil {
 			l.WithError(err).Warn("unable to read client definition")
+			return nil
 		}
+
+		client := bootClient{}
+		err = yaml.Unmarshal(fileContents, &client.data)
 
 		return nil
 	})
