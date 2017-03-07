@@ -30,9 +30,7 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
-	var err error
-
-	clientStore, err = localfs.NewStore(dataDir)
+	clientStore, err := localfs.NewStore(dataDir)
 
 	if err != nil {
 		log.Error("unable to create localfs store:", err)
