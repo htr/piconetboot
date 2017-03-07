@@ -6,8 +6,10 @@ import (
 	"io/ioutil"
 	"net/url"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"sync"
+	"syscall"
 
 	yaml "gopkg.in/yaml.v2"
 
@@ -35,6 +37,15 @@ func NewStore(path string) (*localFsStore, error) {
 		clientsCache: []bootClient{},
 		mu:           new(sync.RWMutex),
 	}
+
+	go func() {
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, syscall.SIGHUP)
+		for _ = range c {
+			log.Info("SIGHUP received, updating clients cache")
+			s.updateCache()
+		}
+	}()
 
 	s.updateCache()
 
