@@ -46,7 +46,16 @@ boot
 			w.WriteHeader(400)
 			return
 		}
-		w.Write([]byte(bootScript))
+		log.WithField("path", r.URL.Path).WithField("client-data", r.Form).WithField("headers", r.Header).Debug("Boot")
+
+		client, err := clientStore.FindClient(r.Form)
+		if err != nil {
+			log.WithError(err).Info("unable to find a matching client")
+			w.Write([]byte("#!ipxe\necho unable to find a matching client\nshell\n"))
+			return
+		}
+
+		w.Write([]byte(ipxeScriptPreamble() + client.BootScript()))
 	}).Methods("POST")
 
 	srv := &http.Server{
