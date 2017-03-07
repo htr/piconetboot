@@ -16,3 +16,7 @@ type bootClient struct {
 }
 
 var _ piconetboot.BootClient = (*bootClient)(nil)
+
+func (c bootClient) BootScript() string {
+	return data.BootScript
+}
