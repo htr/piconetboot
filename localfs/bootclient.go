@@ -1,6 +1,10 @@
 package localfs
 
-import "github.com/htr/piconetboot"
+import (
+	"net/url"
+
+	"github.com/htr/piconetboot"
+)
 
 type bootClient struct {
 	data struct {
@@ -21,6 +25,6 @@ func (c bootClient) BootScript() string {
 	return c.data.BootScript
 }
 
-func (c bootClient) match() bool {
+func (c bootClient) match(filter url.Values) bool {
 	return false
 }
