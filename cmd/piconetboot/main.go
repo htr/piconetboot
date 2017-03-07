@@ -40,7 +40,7 @@ chain http://10.0.15.1:8085/boot##params
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-
+		w.Write([]byte(defaultScript))
 	}).Methods("GET")
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
