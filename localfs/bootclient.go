@@ -1,5 +1,7 @@
 package localfs
 
+import "github.com/htr/piconetboot"
+
 type bootClient struct {
 	data struct {
 		Matchers []struct {
@@ -12,3 +14,5 @@ type bootClient struct {
 		Name       string
 	}
 }
+
+var _ piconetboot.BootClient = (*bootClient)(nil)
