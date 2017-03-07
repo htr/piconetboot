@@ -53,6 +53,10 @@ boot
 	}).Methods("GET")
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.ParseForm() != nil {
+			w.WriteHeader(400)
+			return
+		}
 		w.Write([]byte(bootScript))
 	}).Methods("POST")
 
