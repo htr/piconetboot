@@ -7,5 +7,5 @@ type BootClientStore interface {
 }
 
 type BootClient interface {
-	// TODO
+	BootScript() string
 }
