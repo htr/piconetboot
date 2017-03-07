@@ -3,6 +3,7 @@ package localfs
 import (
 	"net/url"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/htr/piconetboot"
 )
 
@@ -30,6 +31,13 @@ func (c bootClient) match(filter url.Values) bool {
 	asset := filter.Get("asset")
 	serial := filter.Get("serial")
 	uuid := filter.Get("uuid")
+
+	log.WithFields(log.Fields{
+		"mac":    mac,
+		"asset":  asset,
+		"serial": serial,
+		"uuid":   uuid,
+	}).Debug("bootClient.match")
 
 	return false
 }
