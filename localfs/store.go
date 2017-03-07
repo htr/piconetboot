@@ -7,6 +7,7 @@ import (
 	"os"
 	"sync"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/htr/piconetboot"
 )
 
@@ -50,7 +51,24 @@ func (s *localFsStore) Find(filter url.Values) (piconetboot.BootClient, error) {
 }
 
 func (s *localFsStore) updateCache() {
-	// XXX
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	clients := []bootClient{}
+
+	err := filepath.Walk(s.path, func(path string, fi os.FileInfo, err error) error) {
+		if fi.IsDir() {
+			return nil
+		}
+		l := log.WithField("path",path)
+		l.Debug("reading client definition")
+
+		fileContents, err := ioutil.ReadFile(path)
+		if err != nil {
+			log.WithField("path",
+
+	}
+
 
 }
 
