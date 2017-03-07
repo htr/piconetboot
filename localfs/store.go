@@ -2,6 +2,7 @@ package localfs
 
 import (
 	"net/url"
+	"sync"
 
 	"github.com/htr/piconetboot"
 )
@@ -9,6 +10,7 @@ import (
 type localFsStore struct {
 	path         string
 	clientsCache []bootClient
+	mu           *sync.RWMutex
 }
 
 var _ piconetboot.BootClientStore = (*localFsStore)(nil)
@@ -21,6 +23,7 @@ func NewStore(path string) (*localFsStore, error) {
 	s := &localFsStore{
 		path:         path,
 		clientsCache: []bootClient{},
+		mu:           new(sync.RWMutex),
 	}
 
 	return s, nil
