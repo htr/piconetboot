@@ -14,12 +14,14 @@ import (
 var (
 	addr         string
 	dataDir      string
+	staticDir    string
 	debugEnabled bool
 )
 
 func main() {
 	flag.StringVar(&addr, "addr", "127.0.0.1:8085", "ipxe reachable local address")
 	flag.StringVar(&dataDir, "data-dir", "", "directory containing boot client definitions")
+	flag.StringVar(&staticDir, "static-dir", "", "directory containing static files")
 	flag.BoolVar(&debugEnabled, "debug", false, "increases logging verbosity level")
 	flag.Parse()
 
