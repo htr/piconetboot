@@ -32,6 +32,7 @@ func main() {
 	var clientStore piconetboot.BootClientStore
 
 	r := mux.NewRouter()
+
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(genDefaultIpxeScript()))
 	}).Methods("GET")
@@ -52,6 +53,8 @@ func main() {
 
 		w.Write([]byte(ipxeScriptPreamble() + client.BootScript()))
 	}).Methods("POST")
+
+	//XXX TODO handle static content
 
 	srv := &http.Server{
 		Handler: requestLogger{r},
