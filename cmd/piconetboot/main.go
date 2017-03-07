@@ -51,7 +51,7 @@ boot
 	}).Methods("GET")
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-
+		w.Write([]byte(bootScript))
 	}).Methods("POST")
 
 	srv := &http.Server{
