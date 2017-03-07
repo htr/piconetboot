@@ -1,6 +1,7 @@
 package localfs
 
 import (
+	"errors"
 	"fmt"
 	"net/url"
 	"os"
@@ -16,6 +17,8 @@ type localFsStore struct {
 }
 
 var _ piconetboot.BootClientStore = (*localFsStore)(nil)
+
+var errNoMatch = errors.New("unable to find a matching boot client")
 
 func NewStore(path string) (*localFsStore, error) {
 	if !isDir(path) {
@@ -34,8 +37,16 @@ func NewStore(path string) (*localFsStore, error) {
 }
 
 func (s *localFsStore) Find(filter url.Values) (piconetboot.BootClient, error) {
-	// XXX
-	return nil, nil
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+
+	for _, client := range s.clientsCache {
+		if client.match(filter) {
+			return client, nil
+		}
+	}
+
+	return nil, errNoMatch
 }
 
 func (s *localFsStore) updateCache() {
