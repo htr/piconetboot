@@ -56,7 +56,7 @@ func (s *localFsStore) updateCache() {
 
 	clients := []bootClient{}
 
-	err := filepath.Walk(s.path, func(path string, fi os.FileInfo, err error) error) {
+	err := filepath.Walk(s.path, func(path string, fi os.FileInfo, err error) error {
 		if fi.IsDir() {
 			return nil
 		}
