@@ -7,7 +7,7 @@ import (
 )
 
 type localFsStore struct {
-	path string
+	path         string
 	clientsCache []bootClient
 }
 
@@ -19,8 +19,8 @@ func NewStore(path string) (*localFsStore, error) {
 	}
 
 	s := &localFsStore{
-		path: path,
-		clientsCache: []bootClient{}
+		path:         path,
+		clientsCache: []bootClient{},
 	}
 
 	return s, nil
