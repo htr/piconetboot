@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -30,6 +31,13 @@ func main() {
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
 	}).Methods("POST")
+
+	srv := &http.Server{
+		Handler: r,
+		Addr:    addr,
+	}
+
+	log.Fatal(srv.ListenAndServe())
 
 	fmt.Println("vim-go")
 }
