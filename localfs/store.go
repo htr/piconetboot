@@ -8,7 +8,7 @@ import (
 
 type localFsStore struct {
 	path string
-	clientsCache []bootClient{}
+	clientsCache []bootClient
 }
 
 var _ piconetboot.BootClientStore = (*localFsStore)(nil)
@@ -20,6 +20,7 @@ func NewStore(path string) (*localFsStore, error) {
 
 	s := &localFsStore{
 		path: path,
+		clientsCache: []bootClient{}
 	}
 
 	return s, nil
