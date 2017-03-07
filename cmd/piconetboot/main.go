@@ -54,7 +54,7 @@ func main() {
 		w.Write([]byte(ipxeScriptPreamble() + client.BootScript()))
 	}).Methods("POST")
 
-	//XXX TODO handle static content
+	log.WithField("listen-addr", addr).Info("starting http server")
 
 	srv := &http.Server{
 		Handler: requestLogger{r},
