@@ -38,6 +38,13 @@ param asset ${asset}
 chain http://10.0.15.1:8085/boot##params
 `
 
+	const bootScript = `#!ipxe
+set base-url http://stable.release.core-os.net/amd64-usr/current
+kernel ${base-url}/coreos_production_pxe.vmlinuz console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0
+initrd ${base-url}/coreos_production_pxe_image.cpio.gz
+boot
+`
+
 	r := mux.NewRouter()
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(defaultScript))
