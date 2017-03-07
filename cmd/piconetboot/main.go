@@ -31,13 +31,6 @@ func main() {
 
 	var clientStore piconetboot.BootClientStore
 
-	const bootScript = `#!ipxe
-set base-url http://stable.release.core-os.net/amd64-usr/current
-kernel ${base-url}/coreos_production_pxe.vmlinuz console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0
-initrd ${base-url}/coreos_production_pxe_image.cpio.gz
-boot
-`
-
 	r := mux.NewRouter()
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(genDefaultIpxeScript()))
