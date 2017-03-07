@@ -3,7 +3,7 @@ package piconetboot
 import "net/url"
 
 type BootClientStore interface {
-	Find(filter url.Values) (BootClient, err)
+	Find(filter url.Values) (BootClient, error)
 }
 
 type BootClient interface {
