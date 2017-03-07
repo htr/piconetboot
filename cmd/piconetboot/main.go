@@ -27,21 +27,6 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
-	const defaultScript = `#!ipxe
-dhcp
-params
-set idx:int32 0
-:loop isset ${net${idx}/mac} || goto loop_done
-echo net${idx} is a ${net${idx}/chip} with MAC ${net${idx}/mac}
-param net${idx}mac ${net${idx}/mac}
-inc idx && goto loop
-:loop_done
-param uuid ${uuid}
-param serial ${serial}
-param asset ${asset}
-chain http://10.0.15.1:8085/boot##params
-`
-
 	const bootScript = `#!ipxe
 set base-url http://stable.release.core-os.net/amd64-usr/current
 kernel ${base-url}/coreos_production_pxe.vmlinuz console=tty0 console=ttyS0 coreos.autologin=tty1 coreos.autologin=ttyS0
@@ -51,7 +36,7 @@ boot
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(defaultScript))
+		w.Write([]byte(genDefaultIpxeScript()))
 	}).Methods("GET")
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -70,6 +55,30 @@ boot
 	log.Fatal(srv.ListenAndServe())
 
 	fmt.Println("vim-go")
+}
+
+func genDefaultIpxeScript() string {
+	return ipxeScriptPreamble() + `
+
+dhcp
+params
+set idx:int32 0
+:loop isset ${net${idx}/mac} || goto loop_done
+echo net${idx} is a ${net${idx}/chip} with MAC ${net${idx}/mac}
+param net${idx}mac ${net${idx}/mac}
+param net${idx}bustype ${net${idx}/bustype}
+param net${idx}busid ${net${idx}/busid}
+param net${idx}chip ${net${idx}/chip}
+param net${idx}busloc ${net${idx}/busloc}
+
+inc idx && goto loop
+:loop_done
+param uuid ${uuid}
+param serial ${serial}
+param asset ${asset}
+
+chain http://${bootserver}/##params
+`
 }
 
 func ipxeScriptPreamble() string {
