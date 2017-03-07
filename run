@@ -1,2 +1,2 @@
 #!/bin/sh
-go build -o piconetboot github.com/htr/piconetboot/cmd/piconetboot  && ./piconetboot -addr 10.0.15.1:8085 -data-dir=$(pwd)/testing/datadir -static-dir=$(pwd)/testing/static
+go build -o piconetboot github.com/htr/piconetboot/cmd/piconetboot  && ./piconetboot -addr 10.0.15.1:8085 -data-dir=$(pwd)/testing/datadir -static-dir=$(pwd)/testing/static -debug
