@@ -52,7 +52,7 @@ func (c bootClient) match(filter url.Values) bool {
 			log.WithField("client-name", c.data.Name).Debug("matched asset tag")
 			return true
 		}
-		if matcher.UUID != "" && matcher.Uuid == uuid {
+		if matcher.UUID != "" && matcher.UUID == uuid {
 			log.WithField("client-name", c.data.Name).Debug("matched uuid")
 			return true
 		}

@@ -4,9 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"os"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/htr/piconetboot"
+	"github.com/htr/piconetboot/localfs"
 
 	"github.com/gorilla/mux"
 )
@@ -29,7 +30,14 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
-	var clientStore piconetboot.BootClientStore
+	var err error
+
+	clientStore, err = localfs.NewStore(dataDir)
+
+	if err != nil {
+		log.Error("unable to create localfs store:", err)
+		os.Exit(1)
+	}
 
 	r := mux.NewRouter()
 
@@ -53,6 +61,8 @@ func main() {
 
 		w.Write([]byte(ipxeScriptPreamble() + client.BootScript()))
 	}).Methods("POST")
+
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(staticDir))))
 
 	log.WithField("listen-addr", addr).Info("starting http server")
 
