@@ -3,8 +3,10 @@ package localfs
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/url"
 	"os"
+	"path/filepath"
 	"sync"
 
 	log "github.com/Sirupsen/logrus"
@@ -60,7 +62,7 @@ func (s *localFsStore) updateCache() {
 		if fi.IsDir() {
 			return nil
 		}
-		l := log.WithField("path",path)
+		l := log.WithField("path", path)
 		l.Debug("reading client definition")
 
 		fileContents, err := ioutil.ReadFile(path)
@@ -69,8 +71,7 @@ func (s *localFsStore) updateCache() {
 		}
 
 		return nil
-	}
-
+	})
 
 }
 
