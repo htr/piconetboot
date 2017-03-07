@@ -39,21 +39,21 @@ func (c bootClient) match(filter url.Values) bool {
 		"uuid":   uuid,
 	}).Debug("bootClient.match")
 
-	for _, matcher := range b.data.Matchers {
+	for _, matcher := range c.data.Matchers {
 		if matcher.Mac != "" && matcher.Mac == mac {
-			log.WithField("client-name", b.data.Name).Debug("matched mac address")
+			log.WithField("client-name", c.data.Name).Debug("matched mac address")
 			return true
 		}
 		if matcher.Serial != "" && matcher.Serial == serial {
-			log.WithField("client-name", b.data.Name).Debug("matched serial number")
+			log.WithField("client-name", c.data.Name).Debug("matched serial number")
 			return true
 		}
 		if matcher.Asset != "" && matcher.Asset == asset {
-			log.WithField("client-name", b.data.Name).Debug("matched asset tag")
+			log.WithField("client-name", c.data.Name).Debug("matched asset tag")
 			return true
 		}
 		if matcher.UUID != "" && matcher.Uuid == uuid {
-			log.WithField("client-name", b.data.Name).Debug("matched uuid")
+			log.WithField("client-name", c.data.Name).Debug("matched uuid")
 			return true
 		}
 	}
