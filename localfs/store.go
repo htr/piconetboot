@@ -1,6 +1,7 @@
 package localfs
 
 import (
+	"fmt"
 	"net/url"
 	"os"
 	"sync"
@@ -18,7 +19,7 @@ var _ piconetboot.BootClientStore = (*localFsStore)(nil)
 
 func NewStore(path string) (*localFsStore, error) {
 	if !isDir(path) {
-		// XXX
+		return nil, fmt.Errorf("path %s is not a directory", path)
 	}
 
 	s := &localFsStore{
