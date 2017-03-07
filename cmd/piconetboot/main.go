@@ -23,7 +23,9 @@ func main() {
 	flag.BoolVar(&debugEnabled, "debug", false, "increases logging verbosity level")
 	flag.Parse()
 
-	// handle the debug thingy
+	if debugEnabled {
+		log.SetLevel(log.DebugLevel)
+	}
 
 	const defaultScript = `#!ipxe
 dhcp
