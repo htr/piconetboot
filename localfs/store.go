@@ -68,6 +68,7 @@ func (s *localFsStore) updateCache() {
 			l.WithError(err).Warn("unable to read client definition")
 		}
 
+		return nil
 	}
 
 
