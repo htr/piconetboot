@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/htr/piconetboot"
 
 	"github.com/gorilla/mux"
 )
@@ -25,6 +26,8 @@ func main() {
 	if debugEnabled {
 		log.SetLevel(log.DebugLevel)
 	}
+
+	var clientStore piconetboot.BootClientStore
 
 	const bootScript = `#!ipxe
 set base-url http://stable.release.core-os.net/amd64-usr/current
