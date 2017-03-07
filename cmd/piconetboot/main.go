@@ -71,3 +71,9 @@ boot
 
 	fmt.Println("vim-go")
 }
+
+func ipxeScriptPreamble() string {
+	localAddress := addr
+
+	return fmt.Sprintf("#!ipxe\nset bootserver %s\n", localAddress)
+}
