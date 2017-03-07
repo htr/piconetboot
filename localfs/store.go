@@ -2,6 +2,7 @@ package localfs
 
 import (
 	"net/url"
+	"os"
 	"sync"
 
 	"github.com/htr/piconetboot"
@@ -39,4 +40,9 @@ func (s *localFsStore) Find(filter url.Values) (piconetboot.BootClient, error) {
 func (s *localFsStore) updateCache() {
 	// XXX
 
+}
+
+func isDir(path string) bool {
+	fi, err := os.Stat(path)
+	return err == nil && fi.IsDir()
 }
