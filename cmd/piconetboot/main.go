@@ -48,7 +48,7 @@ boot
 		}
 		log.WithField("path", r.URL.Path).WithField("client-data", r.Form).WithField("headers", r.Header).Debug("Boot")
 
-		client, err := clientStore.FindClient(r.Form)
+		client, err := clientStore.Find(r.Form)
 		if err != nil {
 			log.WithError(err).Info("unable to find a matching client")
 			w.Write([]byte("#!ipxe\necho unable to find a matching client\nshell\n"))
