@@ -26,10 +26,17 @@ func NewStore(path string) (*localFsStore, error) {
 		mu:           new(sync.RWMutex),
 	}
 
+	s.updateCache()
+
 	return s, nil
 }
 
 func (s *localFsStore) Find(filter url.Values) (piconetboot.BootClient, error) {
 	// XXX
 	return nil, nil
+}
+
+func (s *localFsStore) updateCache() {
+	// XXX
+
 }
