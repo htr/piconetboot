@@ -1,4 +1,3 @@
 #!/bin/sh
 
-
 qemu-system-x86_64 --curses -boot d -cdrom $(pwd)/testing/ipxe.iso -net nic,model=virtio,macaddr=00:00:00:11:11:12 -net bridge,br=netboot0 -uuid 4c4c4544-0032-3510-8034-cac04f343832 -smbios type=1,serial=A259481 -m 1024
