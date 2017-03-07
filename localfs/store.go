@@ -75,10 +75,24 @@ func (s *localFsStore) updateCache() {
 
 		client := bootClient{}
 		err = yaml.Unmarshal(fileContents, &client.data)
+		if err != nil {
+			log.WithField("path", path).WithError(err).Warn("unable to parse client definition")
+			return nil
+		}
+
+		clients = append(clients, client)
+
+		log.WithField("path", path).WithField("client-definition", client).Debug("client definition cached")
 
 		return nil
 	})
 
+	if err != nil {
+		log.WithError(err).WithField("path", s.path).Warn("error while updating clientsCache")
+		return
+	}
+
+	s.clientsCache = clients
 }
 
 func isDir(path string) bool {
